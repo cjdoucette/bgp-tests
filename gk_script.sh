@@ -25,6 +25,8 @@ su ubuntu -c 'ctags -R .'
 ./build/gatekeeper -- -l gatekeeper.log &
 
 # Setup BIRD.
+sleep 10
+sudo pkill bird
 cd ~
-wget https://raw.githubusercontent.com/cjdoucette/bgp-tests/master/gk-bird.conf
+wget https://raw.githubusercontent.com/cjdoucette/bgp-tests/master/configs/gk-bird.conf
 sudo bird -c gk-bird.conf

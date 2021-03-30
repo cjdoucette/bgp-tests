@@ -25,13 +25,14 @@ sudo pkill bird
 sudo pkill gatekeeper
 ```
 
-From the home directory:
-
-    sudo bird -c gk-bird.conf
-
-From the `gatekeeper` directory:
+From the `gatekeeper` directory, run Gatekeeper:
 
     sudo ./build/gatekeeper
+
+
+From the home directory, run BIRD:
+
+    sudo bird -c gk-bird.conf
 
 ## Client instance
 
@@ -59,16 +60,16 @@ The testbed has two instances -- a client and a Gatekeeper server:
 Both instances have a "management" interface that is connected to the Internet (not shown). They also have the following ports to interact with each other:
 
 * Client port (1):
- * 172.31.1.184
- * 2600:1f16:354:f701:795:5efd:5335:9876
+    * 172.31.1.184
+    * 2600:1f16:354:f701:795:5efd:5335:9876
 
 * Gatekeeper front interface (2):
- * 172.31.1.43
- * 2600:1f16:354:f701:795:5efd:5335:1439
+    * 172.31.1.43
+    * 2600:1f16:354:f701:795:5efd:5335:1439
 
 * Gatekeeper back interface (3):
- * 172.31.2.102
- * 2600:1f16:354:f702:795:5efd:5335:1501
+    * 172.31.2.102
+    * 2600:1f16:354:f702:795:5efd:5335:1501
 
 # Testing
 
@@ -85,6 +86,13 @@ When in the `birdc` prompt, run the following:
 If you scroll down, you should see the BGP connection information:
 
 ```
+bgp1       BGP        ---        up     19:45:49.568  Established
+  BGP state:          Established
+    Neighbor address: 172.31.1.43
+    Neighbor AS:      4000
+    Local AS:         3000
+    Neighbor ID:      172.31.1.43
+...
 ```
 
 ## Test pinging the Gatekeeper server from the client
@@ -104,4 +112,4 @@ To ping the Gatekeeper server's back interface (IPv4 and IPv6):
 From the Gatekeeper server, to ping the client use the `-I` flag to force the ping through the KNI, which passes packets through Gatekeeper and out the front interface:
 
     ping -I kni_front 172.31.1.184
-    ping -c 1 -I kni_front -6 2600:1f16:354:f701:795:5efd:5335:9876
+    ping -I kni_front -6 2600:1f16:354:f701:795:5efd:5335:9876
